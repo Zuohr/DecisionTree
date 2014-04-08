@@ -29,6 +29,7 @@ public class Preprocess {
 			int rowCnt = 0;
 
 			String line;
+			
 			while ((line = br.readLine()) != null) {
 				if (line.startsWith("@attribute")) {
 					String[] attrs = line.trim().split("\\s+");
