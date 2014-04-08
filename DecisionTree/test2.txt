@@ -1,0 +1,10 @@
+@relation financial_service
+
+@attribute Outlook {Sunny,Overcast,Rain}
+@attribute Temp {hot,mild,cool}
+@attribute Hum {High,Normal,Strong}
+@attribute Wind {Weak,Strong}
+@attribute Label {yes,no}
+
+@data
+Sunny,hot,High,Weak,noSunny,hot,High,Strong,noOvercast,hot,High,Weak,yesRain,mild,High,Weak,yesRain,cool,Normal,Weak,yesRain,cool,Normal,Strong,noOvercast,cool,Normal,Strong,yesSunny,mild,High,Weak,noSunny,cool,Normal,Weak,yesRain,mild,Normal,Weak,yesSunny,mild,Normal,Strong,yesOvercast,mild,High,Strong,yesOvercast,hot,Normal,Weak,yesRain,mild,High,Strong,no
