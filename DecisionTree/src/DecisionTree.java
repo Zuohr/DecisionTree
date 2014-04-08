@@ -68,6 +68,7 @@ public class DecisionTree {
 	public String selectAtrribute(TreeNode node, String[][] deData,
 			boolean flags[], LinkedHashSet<String> atrributes,
 			HashMap<String, Integer> attrIndexMap) {
+		if(atrributes==null||deData==null||node==null||attrIndexMap==null){System.err.print("attributes is null");}
 		double Gain[] = new double[atrributes.size()];
 		int class_index = deData[0].length - 1;
 		String return_atrribute = null;
@@ -178,6 +179,7 @@ public class DecisionTree {
 	public void buildDecisionTree(TreeNode node, String[][] deData,
 			boolean flags[], LinkedHashSet<String> attributes,
 			HashMap<String, Integer> attrIndexMap) {
+		
 		if (attributes.isEmpty()) {
 			HashMap<String, Integer> classMap = new HashMap<String, Integer>();
 			int classIndex = deData[0].length - 1;
@@ -228,6 +230,9 @@ public class DecisionTree {
 		String[][] transTable = Preprocess.transform(deData);
 		String attribute = selectAtrribute(node, transTable, flags, attributes,
 				attrIndexMap);
+		if(attribute==null){
+			return;
+		}
 		node.setElement(attribute);
 		// System.out.println(attribute);
 		if (node == root) {
@@ -283,6 +288,7 @@ public class DecisionTree {
 				}
 
 				if (subData.length > 0) {
+					
 					buildDecisionTree(child, subData, subFlags, newAttributes,
 							attrIndexMap);
 				}
