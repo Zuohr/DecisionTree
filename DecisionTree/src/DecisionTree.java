@@ -5,28 +5,28 @@ import java.util.LinkedHashSet;
 import java.util.Iterator;
 
 class TreeNode {
-	String element;
+	String feature;
 	String value;
-	LinkedHashSet<TreeNode> childs;
+	LinkedHashSet<TreeNode> children;
 
 	public TreeNode() {
-		this.element = null;
+		this.feature = null;
 		this.value = null;
-		this.childs = null;
+		this.children = null;
 	}
 
 	public TreeNode(String value) {
-		this.element = null;
+		this.feature = null;
 		this.value = value;
-		this.childs = null;
+		this.children = null;
 	}
 
 	public String getElement() {
-		return this.element;
+		return this.feature;
 	}
 
 	public void setElement(String e) {
-		this.element = e;
+		this.feature = e;
 	}
 
 	public String getValue() {
@@ -38,11 +38,11 @@ class TreeNode {
 	}
 
 	public LinkedHashSet<TreeNode> getChilds() {
-		return this.childs;
+		return this.children;
 	}
 
 	public void setChilds(LinkedHashSet<TreeNode> childs) {
-		this.childs = childs;
+		this.children = childs;
 	}
 }
 
@@ -245,17 +245,17 @@ public class DecisionTree {
 				attrValues.add(transTable[i][attrIndex]);
 			}
 		}
-		LinkedHashSet<TreeNode> childs = new LinkedHashSet<TreeNode>();
+		LinkedHashSet<TreeNode> children = new LinkedHashSet<TreeNode>();
 		for (String attrValue : attrValues) {
 			TreeNode tn = new TreeNode(attrValue);
-			childs.add(tn);
+			children.add(tn);
 		}
-		node.setChilds(childs);
+		node.setChilds(children);
 
 		attributes.remove(attribute);
 
-		if (!childs.isEmpty()) {
-			for (TreeNode child : childs) {
+		if (!children.isEmpty()) {
+			for (TreeNode child : children) {
 				boolean newFlags[] = new boolean[deData.length];
 				for (int i = 0; i < deData.length; i++) {
 					newFlags[i] = flags[i];
