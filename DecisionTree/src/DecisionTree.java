@@ -80,7 +80,7 @@ public class DecisionTree {
 			LinkedHashSet<String> classes = new LinkedHashSet<String>();
 			
 			for(int i = 0; i < deData.length; i++) {
-				if(flags[i] == true) {
+				if(flags[i]) {
 					values.add(deData[i][index]);
 					classes.add(deData[i][class_index]);
 				}
@@ -92,7 +92,7 @@ public class DecisionTree {
 			int class_vector[] = new int[class_count];
 			
 			for(int i = 0; i < deData.length; i++) {
-				if(flags[i] == true) {
+				if(flags[i]) {
 					int j = 0;
 					for(String v:values) {
 						if(deData[i][index].equals(v)) {
@@ -179,11 +179,11 @@ public class DecisionTree {
 	
 	public void buildDecisionTree(TreeNode node, String[][] deData, boolean flags[],
 			LinkedHashSet<String> attributes, HashMap<String,Integer> attrIndexMap) {
-		if(attributes.isEmpty() == true) {
+		if(attributes.isEmpty()) {
 			HashMap<String,Integer> classMap = new HashMap<String,Integer>();
 			int classIndex = deData[0].length - 1;
 			for(int i = 0; i < deData.length; i++) {
-				if(flags[i] == true) {
+				if(flags[i]) {
 					if(classMap.containsKey(deData[i][classIndex])) {
 						int count = classMap.get(deData[i][classIndex]);
 						classMap.put(deData[i][classIndex], count+1);
@@ -212,7 +212,7 @@ public class DecisionTree {
 		String class_name = null;
 		HashSet<String> classSet = new HashSet<String>();
 		for(int i = 0; i < deData.length; i++) {
-			if(flags[i] == true) {
+			if(flags[i]) {
 				class_name = deData[i][class_index];
 				classSet.add(class_name);
 			}
@@ -237,7 +237,7 @@ public class DecisionTree {
 		int attrIndex = attrIndexMap.get(attribute);
 		LinkedHashSet<String> attrValues = new LinkedHashSet<String>();
 		for(int i = 0; i < deData.length; i++) {
-			if(flags[i] == true) {
+			if(flags[i]) {
 				attrValues.add(deData[i][attrIndex]);
 			}
 		}
@@ -250,7 +250,7 @@ public class DecisionTree {
 		
 		attributes.remove(attribute);
 		
-		if(childs.isEmpty() != true) {
+		if(!childs.isEmpty()) {
 			for(TreeNode child:childs) {
 				boolean newFlags[] = new boolean[deData.length] ;
 				for(int i = 0; i < deData.length; i++) {
