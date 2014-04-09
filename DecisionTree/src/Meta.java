@@ -11,4 +11,5 @@ public class Meta {
 	HashMap<String, Integer> attrMap;
 	ArrayList<Boolean> realCols;
 	int labelPos;
+	String mostFreq;
 }

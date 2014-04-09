@@ -19,6 +19,8 @@ public class Preprocess {
 
 		result.attrSet = new LinkedHashSet<String>();
 		result.attrMap = new HashMap<String, Integer>();
+		
+		Map<String, Integer> freq = new HashMap<String, Integer> ();
 
 		String[][] deData = null;
 		try {
@@ -69,7 +71,22 @@ public class Preprocess {
 					for (int col = 0; col < cols.length; col++) {
 						deData[row][col] = cols[col];
 					}
+					//
+					Integer count = freq.get(deData[row][labelPos]);
+					if (count == null) {
+						freq.put(deData[row][labelPos], 1);
+					} else {
+						freq.put(deData[row][labelPos], count + 1);
+					}
+					//
 					row++;
+				}
+			}
+			
+			int maxFreq = 0;
+			for (String key : freq.keySet()) {
+				if (maxFreq < freq.get(key)) {
+					result.mostFreq = key;
 				}
 			}
 
@@ -77,9 +94,9 @@ public class Preprocess {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < deData.length; i++) {
-			System.out.println(Arrays.toString(deData[i]));
-		}
+//		for (int i = 0; i < deData.length; i++) {
+//			System.out.println(Arrays.toString(deData[i]));
+//		}
 
 		result.flags = new boolean[deData.length];
 		Arrays.fill(result.flags, true);

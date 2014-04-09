@@ -205,8 +205,8 @@ public class DecisionTree {
 			}
 			node.setElement(mostClass);
 			node.setChilds(null);
-			System.out.println("yezhi:" + node.getElement() + ":"
-					+ node.getValue());
+//			System.out.println("yezhi:" + node.getElement() + ":"
+//					+ node.getValue());
 			return;
 		}
 

@@ -91,9 +91,9 @@ public class Main {
 				if (!line.isEmpty() && !line.startsWith("@")) {
 					if (row >= (i - 1) * testRow && row < i * testRow) {
 						test.println(line);
-					} else {
-						train.println(line);
-					}
+					}// else {
+					train.println(line);
+					// }
 					row++;
 				} else {
 					test.println(line);
