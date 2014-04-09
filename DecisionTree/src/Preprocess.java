@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Random;
 
 public class Preprocess {
 	public static ArrayList<Boolean> realCols;
@@ -71,16 +72,23 @@ public class Preprocess {
 					for (int col = 0; col < cols.length; col++) {
 						deData[row][col] = cols[col];
 					}
-					//
 					Integer count = freq.get(deData[row][labelPos]);
 					if (count == null) {
 						freq.put(deData[row][labelPos], 1);
 					} else {
 						freq.put(deData[row][labelPos], count + 1);
 					}
-					//
 					row++;
 				}
+			}
+			
+			// shuffle data
+			Random random = new Random();
+			for (int i = 0; i < deData.length; i++) {
+				int r = random.nextInt(i + 1);
+				String[] temp = deData[i];
+				deData[i] = deData[r];
+				deData[r] = temp;
 			}
 			
 			int maxFreq = 0;
@@ -94,9 +102,9 @@ public class Preprocess {
 			e.printStackTrace();
 		}
 
-//		for (int i = 0; i < deData.length; i++) {
-//			System.out.println(Arrays.toString(deData[i]));
-//		}
+		for (int i = 0; i < deData.length; i++) {
+			System.out.println(Arrays.toString(deData[i]));
+		}
 
 		result.flags = new boolean[deData.length];
 		Arrays.fill(result.flags, true);

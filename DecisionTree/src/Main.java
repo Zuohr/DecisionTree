@@ -23,7 +23,12 @@ public class Main {
 			deTree.buildDecisionTree(trainMeta.root, trainMeta.deData,
 					trainMeta.flags, trainMeta.attrSet, trainMeta.attrMap,
 					trainMeta.mostFreq);
-			errCnt += validate(deTree, testMeta);
+			int err = validate(deTree, testMeta);
+			if (err != -1) {
+				errCnt += err;
+			} else {
+//				rowNum -= testRow;
+			}
 		}
 
 		System.out.println((double) errCnt / rowNum);
@@ -34,6 +39,9 @@ public class Main {
 	private static int validate(DecisionTree deTree, Meta testMeta) {
 		int errCnt = 0;
 		ArrayList<String> prediction = predict(deTree, testMeta);
+		if (prediction == null) {
+			return -1;
+		}
 		ArrayList<String> answer = new ArrayList<String>();
 		for (int i = 0; i < testMeta.deData.length; i++) {
 			answer.add(testMeta.deData[i][testMeta.labelPos]);
@@ -52,6 +60,7 @@ public class Main {
 		for (int i = 0; i < testMeta.deData.length; i++) {
 			TreeNode ptr = deTree.getRoot();
 			while (ptr.children != null) {
+				TreeNode next = ptr;
 				int currCol = testMeta.attrMap.get(ptr.feature);
 				for (TreeNode child : ptr.children) {
 					if (testMeta.realCols.get(currCol)) {
@@ -62,15 +71,20 @@ public class Main {
 								|| Double
 										.parseDouble(testMeta.deData[i][currCol]) > threshold
 								&& child.value.startsWith("gt")) {
-							ptr = child;
+							next = child;
 							break;
 						}
 					} else {
 						if (testMeta.deData[i][currCol].equals(child.value)) {
-							ptr = child;
+							next = child;
 							break;
 						}
 					}
+				}
+				if (next == ptr) {
+					return null;
+				} else {
+					ptr = next;
 				}
 			}
 			result.add(ptr.feature);
@@ -94,9 +108,9 @@ public class Main {
 				if (!line.isEmpty() && !line.startsWith("@")) {
 					if (row >= (i - 1) * testRow && row < i * testRow) {
 						test.println(line);
-					}// else {
-					train.println(line);
-					// }
+					} else {
+						train.println(line);
+					}
 					row++;
 				} else {
 					test.println(line);
