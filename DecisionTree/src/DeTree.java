@@ -58,6 +58,6 @@ public class DeTree {
 		
 		TreeNode root = new TreeNode();
 		DecisionTree decisionTree = new DecisionTree(root);
-		decisionTree.buildDecisionTree(root, deData, flags, attributes, attrIndexMap);	
+//		decisionTree.buildDecisionTree(root, deData, flags, attributes, attrIndexMap);	
 	}
 }

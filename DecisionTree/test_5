@@ -1,0 +1,29 @@
+@relation financial_service
+
+@attribute Service_type {Fund,Loan,CD,Bank_Account,Mortgage}
+@attribute Customer {Student,Business,Other,Doctor,Professional}
+@attribute Monthly_fee real
+@attribute Advertisement_budget real
+@attribute Size {Small,Large,Medium}
+@attribute Promotion {Web&Email,Full,Web,None}
+@attribute Interest_rate real
+@attribute Period real
+@attribute Label {0,1}
+
+@data
+Mortgage,Business,8.99,4.09,Large,None,2,89,1
+Mortgage,Professional,11.62,6.21,Medium,None,2,83,1
+CD,Business,5.5,3.75,Large,Full,0,91,1
+CD,Business,9.85,5.43,Medium,Full,0,72,1
+CD,Business,11.66,2.27,Medium,Full,0,107,1
+CD,Business,10.25,2.64,Large,Full,0,93,1
+CD,Business,14.73,8.02,Medium,Web&Email,0,107,1
+CD,Business,9.01,4.89,Large,Web&Email,0,116,1
+CD,Business,12.39,8.94,Medium,Web&Email,1,79,1
+CD,Business,7.65,4.64,Large,Web&Email,1,93,1
+CD,Business,6.21,5.26,Medium,Web&Email,1,102,1
+CD,Business,6.61,6.38,Large,Web&Email,1,105,1
+CD,Business,7.15,4.73,Medium,Web&Email,1,94,1
+CD,Business,5.95,4.22,Medium,Full,1,103,1
+Fund,Business,2.64,0.52,Small,Web,0,62,0
+Fund,Business,1.94,0.82,Small,Web,0,65,0

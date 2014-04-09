@@ -21,11 +21,14 @@ public class Main {
 			Meta testMeta = Preprocess.preprocess(fileNames[1]);
 			DecisionTree deTree = new DecisionTree(trainMeta.root);
 			deTree.buildDecisionTree(trainMeta.root, trainMeta.deData,
-					trainMeta.flags, trainMeta.attrSet, trainMeta.attrMap);
+					trainMeta.flags, trainMeta.attrSet, trainMeta.attrMap,
+					trainMeta.mostFreq);
 			errCnt += validate(deTree, testMeta);
 		}
 
 		System.out.println((double) errCnt / rowNum);
+		System.out.println(errCnt);
+		System.out.println(rowNum);
 	}
 
 	private static int validate(DecisionTree deTree, Meta testMeta) {

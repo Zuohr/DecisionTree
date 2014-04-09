@@ -178,7 +178,7 @@ public class DecisionTree {
 
 	public void buildDecisionTree(TreeNode node, String[][] deData,
 			boolean flags[], LinkedHashSet<String> attributes,
-			HashMap<String, Integer> attrIndexMap) {
+			HashMap<String, Integer> attrIndexMap, String mostFreq) {
 		
 		if (attributes.isEmpty()) {
 			HashMap<String, Integer> classMap = new HashMap<String, Integer>();
@@ -231,6 +231,7 @@ public class DecisionTree {
 		String attribute = selectAtrribute(node, transTable, flags, attributes,
 				attrIndexMap);
 		if(attribute==null){
+			node.setElement(mostFreq);
 			return;
 		}
 		node.setElement(attribute);
@@ -290,7 +291,7 @@ public class DecisionTree {
 				if (subData.length > 0) {
 					
 					buildDecisionTree(child, subData, subFlags, newAttributes,
-							attrIndexMap);
+							attrIndexMap, mostFreq);
 				}
 			}
 		}
