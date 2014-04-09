@@ -10,7 +10,11 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) {
-		String fileName = "trainProdIntro.binary.arff";
+		crossValidate("trainProdSelection.arff");
+		crossValidate("trainProdIntro.binary.arff");
+	}
+
+	private static void crossValidate(String fileName) {
 		int rowNum = countRow(fileName);
 		int testNum = 10, testRow = rowNum / testNum;
 
@@ -31,9 +35,8 @@ public class Main {
 			}
 		}
 
-		System.out.println((double) errCnt / rowNum);
-		System.out.println(errCnt);
-		System.out.println(rowNum);
+		System.out.printf("Error rate for %s: %.2f\n", fileName, (double) errCnt
+				/ rowNum * 100);
 	}
 
 	private static int validate(DecisionTree deTree, Meta testMeta) {
@@ -108,9 +111,9 @@ public class Main {
 				if (!line.isEmpty() && !line.startsWith("@")) {
 					if (row >= (i - 1) * testRow && row < i * testRow) {
 						test.println(line);
-					} else {
-						train.println(line);
-					}
+					}// else {
+					train.println(line);
+					// }
 					row++;
 				} else {
 					test.println(line);

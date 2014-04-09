@@ -102,9 +102,9 @@ public class Preprocess {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < deData.length; i++) {
-			System.out.println(Arrays.toString(deData[i]));
-		}
+//		for (int i = 0; i < deData.length; i++) {
+//			System.out.println(Arrays.toString(deData[i]));
+//		}
 
 		result.flags = new boolean[deData.length];
 		Arrays.fill(result.flags, true);

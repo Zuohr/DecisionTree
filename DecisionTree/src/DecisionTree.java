@@ -215,8 +215,8 @@ public class DecisionTree {
 		if (classSet.size() == 1) {
 			node.setElement(class_name);
 			node.setChilds(null);
-			System.out.println("leaf:" + node.getElement() + ":"
-					+ node.getValue());
+//			System.out.println("leaf:" + node.getElement() + ":"
+//					+ node.getValue());
 			return;
 		}
 
@@ -228,13 +228,13 @@ public class DecisionTree {
 			return;
 		}
 		node.setElement(attribute);
-		if (node == root) {
-			System.out.println("root:" + node.getElement() + ":"
-					+ node.getValue());
-		} else {
-			System.out.println("branch:" + node.getElement() + ":"
-					+ node.getValue());
-		}
+//		if (node == root) {
+//			System.out.println("root:" + node.getElement() + ":"
+//					+ node.getValue());
+//		} else {
+//			System.out.println("branch:" + node.getElement() + ":"
+//					+ node.getValue());
+//		}
 
 		int attrIndex = attrIndexMap.get(attribute);
 		LinkedHashSet<String> attrValues = new LinkedHashSet<String>();
