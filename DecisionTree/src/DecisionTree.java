@@ -117,13 +117,6 @@ public class DecisionTree {
 				}
 			}
 
-			/*
-			 * for(int i = 0; i < values_count * class_count; i++) {
-			 * System.out.print(values_vector[i] + " "); } System.out.println();
-			 * for(int i = 0; i < class_count; i++) {
-			 * System.out.print(class_vector[i] + " "); } System.out.println();
-			 */
-
 			double InfoD = 0.0;
 			double class_total = 0.0;
 			for (int i = 0; i < class_vector.length; i++) {
@@ -235,7 +228,6 @@ public class DecisionTree {
 			return;
 		}
 		node.setElement(attribute);
-		// System.out.println(attribute);
 		if (node == root) {
 			System.out.println("root:" + node.getElement() + ":"
 					+ node.getValue());
