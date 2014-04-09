@@ -27,7 +27,7 @@ public class Main {
 			if (err != -1) {
 				errCnt += err;
 			} else {
-//				rowNum -= testRow;
+				rowNum -= testRow;
 			}
 		}
 

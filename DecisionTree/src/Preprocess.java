@@ -128,28 +128,6 @@ public class Preprocess {
 		return result;
 	}
 
-	// private static double getTotalEntropy(String[][] data, int labelPos) {
-	// Map<String, Double> freq = new HashMap<String, Double>();
-	// int len = data.length;
-	// for (int i = 0; i < len; i++) {
-	// String clazz = data[i][labelPos];
-	// Double cnt = freq.get(clazz);
-	// if (cnt == null) {
-	// freq.put(clazz, 1d);
-	// } else {
-	// freq.put(clazz, cnt + 1);
-	// }
-	// }
-	//
-	// double entropy = 0;
-	// for (String key : freq.keySet()) {
-	// double cnt = freq.get(key);
-	// entropy += cnt / len * Math.log(cnt / len) / Math.log(2);
-	// }
-	//
-	// return -entropy;
-	// }
-
 	private static void transfer(String[][] result, int col, int labelPos) {
 		int bestPos = 0;
 		double minEntropy = Double.MAX_VALUE;
