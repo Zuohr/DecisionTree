@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
@@ -8,4 +9,6 @@ public class Meta {
 	String[][] deData;
 	LinkedHashSet<String> attrSet;
 	HashMap<String, Integer> attrMap;
+	ArrayList<Boolean> realCols;
+	int labelPos;
 }

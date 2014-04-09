@@ -1,44 +1,136 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-
-import org.omg.CORBA.PUBLIC_MEMBER;
-
-import sun.reflect.generics.tree.Tree;
-
 
 public class Main {
 
 	public static void main(String[] args) {
-		//Meta meta = Preprocess.preprocess("trainProdSelection.arff");
-		Meta meta = Preprocess.preprocess("trainProdIntro.binary.arff");
+		String fileName = "trainProdIntro.binary.arff";
+		int rowNum = countRow(fileName);
+		int testNum = 10, testRow = rowNum / testNum;
 
-		DecisionTree deTree = new DecisionTree(meta.root);
-		deTree.buildDecisionTree(meta.root, meta.deData, meta.flags, meta.attrSet, meta.attrMap);
-		TreeNode root=deTree.getRoot();
-		
-		String[][] test=new String[1][1];
-		HashMap<String, Integer> attrMap=meta.attrMap;
-  ArrayList<String> result=getResult(test, attrMap, root);
-		 
+		int errCnt = 0;
+		for (int i = 1; i <= testNum; i++) {
+			String[] fileNames = splitFile(fileName, i, testRow);
+			Meta trainMeta = Preprocess.preprocess(fileNames[0]);
+			Meta testMeta = Preprocess.preprocess(fileNames[1]);
+			DecisionTree deTree = new DecisionTree(trainMeta.root);
+			deTree.buildDecisionTree(trainMeta.root, trainMeta.deData,
+					trainMeta.flags, trainMeta.attrSet, trainMeta.attrMap);
+			errCnt += validate(deTree, testMeta);
 		}
-	public static ArrayList<String> getResult(String[][] test,HashMap<String, Integer> attrMap,TreeNode root){	
-	ArrayList<String> result=new ArrayList<String>();
-	for(int i=0;i<test.length;i++){
-		while(root.getChilds().size()>0){
-		int attrIndex=attrMap.get(root.getElement());
-	    String currValue=test[i][attrIndex];
-	    LinkedHashSet<TreeNode> childs=root.getChilds();
-	   
-	    for (TreeNode child : childs) {
-			if(child.getValue().equals(currValue)){
-			root=child;	
+
+		System.out.println((double) errCnt / rowNum);
+	}
+
+	private static int validate(DecisionTree deTree, Meta testMeta) {
+		int errCnt = 0;
+		ArrayList<String> prediction = predict(deTree, testMeta);
+		ArrayList<String> answer = new ArrayList<String>();
+		for (int i = 0; i < testMeta.deData.length; i++) {
+			answer.add(testMeta.deData[i][testMeta.labelPos]);
+		}
+		for (int i = 0; i < prediction.size(); i++) {
+			if (!prediction.get(i).equals(answer.get(i))) {
+				errCnt++;
 			}
 		}
-	    String rslt=root.getElement();
-	    result.add(rslt);
-		}
-	}
-	return result;
-	}}
 
+		return errCnt;
+	}
+
+	private static ArrayList<String> predict(DecisionTree deTree, Meta testMeta) {
+		ArrayList<String> result = new ArrayList<String>();
+		for (int i = 0; i < testMeta.deData.length; i++) {
+			TreeNode ptr = deTree.getRoot();
+			while (ptr.children != null) {
+				int currCol = testMeta.attrMap.get(ptr.feature);
+				for (TreeNode child : ptr.children) {
+					if (testMeta.realCols.get(currCol)) {
+						double threshold = Double.parseDouble(child.value
+								.substring(3));
+						if (Double.parseDouble(testMeta.deData[i][currCol]) <= threshold
+								&& child.value.startsWith("le")
+								|| Double
+										.parseDouble(testMeta.deData[i][currCol]) > threshold
+								&& child.value.startsWith("gt")) {
+							ptr = child;
+							break;
+						}
+					} else {
+						if (testMeta.deData[i][currCol].equals(child.value)) {
+							ptr = child;
+							break;
+						}
+					}
+				}
+			}
+			result.add(ptr.feature);
+		}
+		return result;
+	}
+
+	private static String[] splitFile(String fileName, int i, int testRow) {
+		String[] fileNames = { "train_" + i, "test_" + i };
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(new File(
+					fileName)));
+			PrintWriter train = new PrintWriter(new FileWriter(new File(
+					fileNames[0])));
+			PrintWriter test = new PrintWriter(new FileWriter(new File(
+					fileNames[1])));
+
+			String line;
+			int row = 0;
+			while ((line = br.readLine()) != null) {
+				if (!line.isEmpty() && !line.startsWith("@")) {
+					if (row >= (i - 1) * testRow && row < i * testRow) {
+						test.println(line);
+					} else {
+						train.println(line);
+					}
+					row++;
+				} else {
+					test.println(line);
+					train.println(line);
+				}
+			}
+
+			test.close();
+			train.close();
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return fileNames;
+	}
+
+	private static int countRow(String fileName) {
+		int cnt = 0;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(new File(
+					fileName)));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (!line.isEmpty() && !line.startsWith("@")) {
+					cnt++;
+				}
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+
+}

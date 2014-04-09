@@ -43,6 +43,7 @@ public class Preprocess {
 					if (1 < attrs.length
 							&& "label".equals(attrs[1].toLowerCase())) {
 						labelPos = idx;
+						result.labelPos = idx;
 					} else if (1 < attrs.length
 							&& !"label".equals(attrs[1].toLowerCase())) {
 						result.attrSet.add(attrs[1]);
@@ -56,7 +57,7 @@ public class Preprocess {
 				}
 			}
 			br.close();
-
+			result.realCols = realCols;
 			// reads data
 			br = new BufferedReader(new FileReader(new File(fileName)));
 			deData = new String[rowCnt][realCols.size()];
